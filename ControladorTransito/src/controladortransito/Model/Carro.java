@@ -40,6 +40,15 @@ public class Carro  implements Runnable{
     public void setPosicaoLateral(long posicaoLateral) {
         this.posicaoLateral = posicaoLateral;
     }
+
+    public int getIndicaPosicao() {
+        return indicaPosicao;
+    }
+
+    public void setIndicaPosicao(int indicaPosicao) {
+        this.indicaPosicao = indicaPosicao;
+    }
+    
     
     
     @Override
