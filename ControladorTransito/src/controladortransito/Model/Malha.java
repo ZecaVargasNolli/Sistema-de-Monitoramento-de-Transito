@@ -10,17 +10,20 @@ public class Malha {
     
     private Nodo[][] nodos;
 
-    public Malha(int altura, int largura) {
-        this.nodos = new Nodo[altura][largura];
+    public Nodo getNodo(int idxLinha, int idxColuna) {
+        return this.nodos[idxLinha][idxColuna];
     }
     
-    public Nodo getNode(int altura, int largura) {
-        return this.nodos[altura][largura];
+    public void setNodo(int idxLinha, int idxColuna, Nodo nodo) {
+        this.nodos[idxLinha][idxColuna] = nodo;
     }
-    
-    public void setNode(int altura, int largura, Nodo nodo) {
-        this.nodos[altura][largura] = nodo;
+
+    public void setNodos(Nodo[][] nodos) {
+        this.nodos = nodos;
     }
-    
-    
+
+    public Nodo[][] getNodos() {
+        return nodos;
+    }
+
 }
