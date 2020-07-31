@@ -33,6 +33,9 @@ public class Carro extends Thread {
     }
 
     public synchronized void andar(Nodo nodoDestino) {
+        if(nodoDestino.getCarro() != null) {
+            return;
+        }
         this.nodoAtual.setCarro(null);
         this.nodoAtual = nodoDestino;
         this.nodoAtual.setCarro(this);
@@ -67,7 +70,6 @@ public class Carro extends Thread {
         this.nodoAtual.setCarro(null);
     }
     
-
     @Override
     public void run() {
         Nodo proximoNodo = null;
@@ -127,12 +129,12 @@ public class Carro extends Thread {
                 }
             }
             
-            if(proximoNodo.getCarro() == null){
+            if(proximoNodo.getCarro() == null) {
                 this.andar(proximoNodo);
             }
             
             try {
-                sleep(1000);
+                sleep(500);
             }
             catch (Exception e) {}
         }
