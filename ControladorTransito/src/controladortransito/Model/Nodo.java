@@ -9,6 +9,7 @@ package controladortransito.Model;
 public class Nodo {
     
     private Carro carro;
+    private Carro reserva;
     private Malha malhaViaria; /* para manter a relação bi-direcional */
     private Direcao direcao;
     private boolean nodoDeSaida;
@@ -67,8 +68,22 @@ public class Nodo {
         return malhaViaria;
     }
 
+    public Carro getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Carro reserva) {
+        this.reserva = reserva;
+    }
+
     public boolean isCruzamento() {
-        /** @TODO desenvolver */
-        return false;
+        return this.direcao == Direcao.CRUZAMENTO_CIMA           ||
+               this.direcao == Direcao.CRUZAMENTO_BAIXO          ||
+               this.direcao == Direcao.CRUZAMENTO_DIREITA        ||
+               this.direcao == Direcao.CRUZAMENTO_ESQUERDA       ||
+               this.direcao == Direcao.CRUZAMENTO_BAIXO_DIREITA  ||
+               this.direcao == Direcao.CRUZAMENTO_BAIXO_ESQUERDA ||
+               this.direcao == Direcao.CRUZAMENTO_CIMA_DIRETIA   ||
+               this.direcao == Direcao.CRUZAMENTO_CIMA_ESQUERDA;
     }
 }

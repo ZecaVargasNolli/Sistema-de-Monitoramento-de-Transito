@@ -15,56 +15,9 @@ public class Teste {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        LeitorMalha leitor = new LeitorMalha("E:/facul/6-semestre/Sistemas Paralelos/TrabalhoTransito/Malhas exemplo/malha-exemplo-3.txt");
-
-        int[][] malhaCrua = leitor.lerMalha();
-
-        ConversorMatrizMalhaViaria conversor = new ConversorMatrizMalhaViaria(malhaCrua);
-        Malha malhaViariaobj = conversor.getMatrizConvertidaParaMalha();
-        Nodo[][] malhaViaria = malhaViariaobj.getNodos();
-        
-//        Carro carro = new Carro("G");
-//        malhaViaria[7][0].setCarro(carro);
-//        malhaViaria[0][7].setCarro(carro);
-//        malhaViaria[0][18].setCarro(carro);
-//        malhaViaria[6][24].setCarro(carro);
-//        malhaViaria[19][0].setCarro(carro);
-//        malhaViaria[24][8].setCarro(carro);
-//        carro.setNodoAtual(malhaViaria[7][0]);
-//        carro.start();
-
-//        Carro carro = new Carro("G");
-//        malhaViaria[7][0].setCarro(carro);
-//        carro.setNodoAtual(malhaViaria[7][0]);
-//        carro.start();
-//        
-//        Carro carro2 = new Carro("C");
-//        malhaViaria[0][7].setCarro(carro2);
-//        carro2.setNodoAtual(malhaViaria[0][7]);
-//        carro2.start();
-//            
-//        Carro carro3 = new Carro("X");
-//        malhaViaria[19][0].setCarro(carro3);
-//        carro3.setNodoAtual(malhaViaria[19][0]);
-//        carro3.start();
-        ColocadorDeCarro clc = new ColocadorDeCarro(malhaViariaobj);
-        clc.start();
-        
-        while (true) {
-            for (int i = 0; i < malhaViaria.length; i++) {
-                for (int j = 0; j < malhaViaria[i].length; j++) {
-                    Nodo nodo = malhaViaria[i][j];
-                    if (nodo == null) {
-                        System.out.print("  ");
-                    }
-                    else {
-                        System.out.print( (nodo.getCarro() != null ? nodo.getCarro().getNome() : "-") + " ");
-                    }
-
-                }
-                System.out.println("");
-            }
-            Thread.sleep(500);
+        for (int i = 0; i < 257; i++) {
+            char teste = (char) i;
+            System.out.println(i + " - " + teste);
         }
     }
     
@@ -80,7 +33,7 @@ public class Teste {
             Random ran = new Random();
             int id;
             String idStr;
-            Carro carro;
+            CarroMonitor carro;
             Nodo nodo;
             
             while (true) {   
@@ -104,7 +57,7 @@ public class Teste {
                 if(id == 5) {
                    idStr = "M" ;
                 }
-                carro = new Carro(idStr);
+                carro = new CarroMonitor(idStr);
                 nodo = this.malha.getNodo(7, 0);
                 nodo.setCarro(carro);
                 carro.setNodoAtual(nodo);
@@ -135,7 +88,7 @@ public class Teste {
                 if(id == 5) {
                    idStr = "M" ;
                 }
-                carro = new Carro(idStr);
+                carro = new CarroMonitor(idStr);
                 nodo = this.malha.getNodo(0, 7);
                 nodo.setCarro(carro);
                 carro.setNodoAtual(nodo);
@@ -168,7 +121,7 @@ public class Teste {
                 if(id == 5) {
                    idStr = "M" ;
                 }
-                carro = new Carro(idStr);
+                carro = new CarroMonitor(idStr);
                 nodo = this.malha.getNodo(0, 18);
                 nodo.setCarro(carro);
                 carro.setNodoAtual(nodo);

@@ -1,163 +1,141 @@
 package controladortransito.Controller;
 
-
 import controladortransito.Model.Carro;
+import controladortransito.Model.CarroMonitor;
+import controladortransito.Model.CarroSemaforo;
+import controladortransito.Model.Direcao;
 import controladortransito.Model.Malha;
 import controladortransito.Model.Nodo;
 import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
-   public class AdicionadorCarros extends Thread {
-       
-        private Malha malha;
-        private int tempoMiliseg;
+public class AdicionadorCarros extends Thread {
 
-        public AdicionadorCarros(Malha malha, int tempoMiliseg) {
-            this.malha = malha;
-            this.tempoMiliseg = tempoMiliseg;
-        }
-        
-        @Override
-        public void run() {
-            Random ran = new Random();
-            int id;
-            String idStr;
-            Carro carro;
-            Nodo nodo;
-            
-            while (true) {   
-                id = ran.nextInt(5);
-                idStr = "";
-                if(id == 0) {
-                   idStr = "X" ;
-                }
-                if(id == 1) {
-                   idStr = "A" ;
-                }
-                if(id == 2) {
-                   idStr = "B" ;
-                }
-                if(id == 3) {
-                   idStr = "Y" ;
-                }
-                if(id == 4) {
-                   idStr = "Z" ;
-                }
-                if(id == 5) {
-                   idStr = "M" ;
-                }
-                carro = new Carro(idStr);
-                nodo = this.malha.getNodo(7, 0);
-                nodo.setCarro(carro);
-                carro.setNodoAtual(nodo);
-                carro.start();
-                
-                
-                
-                
-                
-                
-                id = ran.nextInt(5);
-                idStr = "";
-                if(id == 0) {
-                   idStr = "X" ;
-                }
-                if(id == 1) {
-                   idStr = "A" ;
-                }
-                if(id == 2) {
-                   idStr = "B" ;
-                }
-                if(id == 3) {
-                   idStr = "Y" ;
-                }
-                if(id == 4) {
-                   idStr = "Z" ;
-                }
-                if(id == 5) {
-                   idStr = "M" ;
-                }
-                carro = new Carro(idStr);
-                nodo = this.malha.getNodo(0, 7);
-                nodo.setCarro(carro);
-                carro.setNodoAtual(nodo);
-                carro.start();
-                
-                
-                
-                
-                
-                
-                
-                
-                id = ran.nextInt(5);
-                idStr = "";
-                if(id == 0) {
-                   idStr = "X" ;
-                }
-                if(id == 1) {
-                   idStr = "A" ;
-                }
-                if(id == 2) {
-                   idStr = "B" ;
-                }
-                if(id == 3) {
-                   idStr = "Y" ;
-                }
-                if(id == 4) {
-                   idStr = "Z" ;
-                }
-                if(id == 5) {
-                   idStr = "M" ;
-                }
-                carro = new Carro(idStr);
-                nodo = this.malha.getNodo(0, 18);
-                nodo.setCarro(carro);
-                carro.setNodoAtual(nodo);
-                carro.start();
-                
-//                id = (char) ran.nextInt(256);
-//                carro = new Carro(id + "");
-//                nodo = this.malha.getNodo(0, 18);
-//                nodo.setCarro(carro);
-//                carro.setNodoAtual(nodo);
-//                carro.start();
-//                
-//                id = (char) ran.nextInt(256);
-//                carro = new Carro(id + "");
-//                nodo = this.malha.getNodo(0, 7);
-//                nodo.setCarro(carro);
-//                carro.setNodoAtual(nodo);
-//                carro.start();
-//                
-//                id = (char) ran.nextInt(256);
-//                carro = new Carro(id + "");
-//                nodo = this.malha.getNodo(6, 24);
-//                nodo.setCarro(carro);
-//                carro.setNodoAtual(nodo);
-//                carro.start();
-//                
-//                id = (char) ran.nextInt(256);
-//                carro = new Carro(id + "");
-//                nodo = this.malha.getNodo(19, 0);
-//                nodo.setCarro(carro);
-//                carro.setNodoAtual(nodo);
-//                carro.start();
-//                
-//                id = (char) ran.nextInt(256);
-//                carro = new Carro(id + "");
-//                nodo = this.malha.getNodo(24, 8);
-//                nodo.setCarro(carro);
-//                carro.setNodoAtual(nodo);
-//                carro.start();
-//                
-                try {
-                    sleep(this.tempoMiliseg);
-                }
-                catch (InterruptedException ex) {}
-            }
-        
-        }
-        
-        
+    private boolean emExecucao;
+    private Malha malha;
+    private int tempoMiliseg;
+    private ArrayList<Nodo> listNodosEntrada;
+    private int qtdTotalCarros;
+    private Semaphore semaforoMaster;
+    private boolean usaSemaforo;
+
+    public AdicionadorCarros(Malha malha, boolean usaSemaforo) {
+        this.emExecucao = true;
+        this.malha = malha;
+        this.tempoMiliseg = 500;
+        this.listNodosEntrada = new ArrayList<Nodo>();
+        this.initListNodosEntrada();
+        this.semaforoMaster = new Semaphore(1);
+        this.usaSemaforo = usaSemaforo;
     }
+
+    public void setTempoMiliseg(int tempoMiliseg) {
+        this.tempoMiliseg = tempoMiliseg;
+    }
+
+    private void initListNodosEntrada() {
+        this.setNodosEntradaDireitaEsquerda();
+        this.setNodosEntradaTopoBaixo();
+    }
+
+    public void paraExcucao() {
+        this.emExecucao = false;
+    }
+
+    private void setNodosEntradaTopoBaixo() {
+        Nodo[][] matrizNodos = this.malha.getNodos();
+        for (int idxColuna = 0; idxColuna < matrizNodos[0].length; idxColuna++) {
+            Nodo nodoAtualTopo = matrizNodos[0][idxColuna];
+            Nodo nodoAtualBaixo = matrizNodos[matrizNodos.length - 1][idxColuna];
+            this.identificaNodoEntrada(nodoAtualTopo, Direcao.BAIXO);
+            this.identificaNodoEntrada(nodoAtualBaixo, Direcao.CIMA);
+        }
+    }
+
+    private void setNodosEntradaDireitaEsquerda() {
+        Nodo[][] matrizNodos = this.malha.getNodos();
+        int colunaBordaDireita = (matrizNodos[0].length - 1);
+        for (int idxLinha = 0; idxLinha < matrizNodos.length; idxLinha++) {
+            Nodo nodoAtualDireita = matrizNodos[idxLinha][colunaBordaDireita];
+            Nodo nodoAtualEsquerda = matrizNodos[idxLinha][0];
+            this.identificaNodoEntrada(nodoAtualDireita, Direcao.ESQUERDA);
+            this.identificaNodoEntrada(nodoAtualEsquerda, Direcao.DIREITA);
+        }
+    }
+
+    private void identificaNodoEntrada(Nodo nodo, Direcao direcao) {
+        if (nodo == null) {
+            return;
+        }
+        if (nodo.getDirecao() == direcao) {
+            this.listNodosEntrada.add(nodo);
+        }
+    }
+
+    private String getIdCarro(int numChar) {
+        char id = (char) (65 + numChar);
+        return id + "";
+    }
+
+    public void setQtdTotalCarros(int qtdTotalCarros) {
+        this.qtdTotalCarros = qtdTotalCarros;
+    }
+    
+    @Override
+    public void run() {
+        Random ran = new Random();
+        boolean validaQtdCarros = this.qtdTotalCarros > 0;
+        int contCarros = 0;
+        int idxListNodosEntrada = 0;
+        Carro carro;
+        Nodo nodo;
+
+        while (this.emExecucao) {
+            
+            if (idxListNodosEntrada > this.listNodosEntrada.size() -1) {
+                idxListNodosEntrada = 0;
+            }
+            
+            nodo = this.listNodosEntrada.get(idxListNodosEntrada);
+
+            if (nodo.getCarro() != null) {
+                idxListNodosEntrada++;
+                if (idxListNodosEntrada == this.listNodosEntrada.size() - 1) {
+                    idxListNodosEntrada = 0;
+                }
+                continue;
+            }
+            if (usaSemaforo) {
+                carro = new CarroSemaforo(this.getIdCarro(ran.nextInt(26)), this.semaforoMaster);                
+            }
+            else {
+                carro = new CarroMonitor(this.getIdCarro(ran.nextInt(26)));                
+            }
+            nodo.setCarro(carro);
+            carro.setNodoAtual(nodo);
+            carro.start();
+
+            if (validaQtdCarros) {
+                contCarros++;
+                if (contCarros >= this.qtdTotalCarros) {
+                    this.emExecucao = false;
+                }
+            }
+            if (idxListNodosEntrada == this.listNodosEntrada.size() - 1) {
+                idxListNodosEntrada = 0;
+            }
+            else {
+                idxListNodosEntrada++;
+            }
+
+            try {
+                this.sleep(this.tempoMiliseg);
+            }
+            catch (InterruptedException ex) {}
+        }
+
+    }
+
+}

@@ -9,17 +9,18 @@ import controladortransito.Model.Malha;
 import controladortransito.Model.Nodo;
 import controladortransito.View.Tela;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
- * @author José Vargas Nolli
+ * @author Jose Vargas Nolli
  */
 public class ControllerTelaMalha {
 
     private Tela view;
     private Malha malhaViaria;
+    private AdicionadorCarros adicionadorCarros;
+    private DesenhadorMalha desenhadorMalha;
 
     public void setView(Tela view) {
         this.view = view;
@@ -38,45 +39,39 @@ public class ControllerTelaMalha {
         ConversorMatrizMalhaViaria conversor = new ConversorMatrizMalhaViaria(malhaBase);
         this.malhaViaria = conversor.getMatrizConvertidaParaMalha();
     }
+        
 
-    public void inciarSimulacao(int tempoMiliseg) {
-        AdicionadorCarros clc = new AdicionadorCarros(this.malhaViaria, tempoMiliseg);
-        clc.start();
-
-        Nodo[][] malhaVi = this.malhaViaria.getNodos();
-
-        Thread th = new Thread(new Runnable() {
-            String malhaPrint = "";
-
-            @Override
-            public void run() {
-                while (true) {
-                    malhaPrint = "";
-                    for (int i = 0; i < malhaVi.length; i++) {
-                        for (int j = 0; j < malhaVi[i].length; j++) {
-                            Nodo nodo = malhaVi[i][j];
-                            if (nodo == null) {
-                                malhaPrint += "  ";
-                            }
-                            else {
-                                malhaPrint += ((nodo.getCarro() != null ? nodo.getCarro().getNome() : "-") + " ");
-                            }
-
-                        }
-                        malhaPrint += "\n";
-                    }
-
-                    view.getTextArea().setText(malhaPrint);
-                    try {
-                        Thread.sleep(250);
-                    }
-                    catch (InterruptedException ex) {
-                    }
-
-                }
-            }
-        });
-        th.start();
+    public void inciarSimulacaoMonitor(int tempoMiliseg, int qtdCarros) {
+        AdicionadorCarros addCar = new AdicionadorCarros(this.malhaViaria, false);
+        addCar.setTempoMiliseg(tempoMiliseg);
+        addCar.setQtdTotalCarros(qtdCarros);
+        this.adicionadorCarros = addCar;
+        addCar.start();
+        
+        DesenhadorMalha desenhadorMalha = new DesenhadorMalha(this.view.getTextArea(), this.malhaViaria);
+        this.desenhadorMalha = desenhadorMalha;
+        desenhadorMalha.start();
+    } 
+    
+    public void inciarSimulacaoSemaforo(int tempoMiliseg, int qtdCarros) {
+        AdicionadorCarros addCar = new AdicionadorCarros(this.malhaViaria, true);
+        addCar.setTempoMiliseg(tempoMiliseg);
+        addCar.setQtdTotalCarros(qtdCarros);
+        this.adicionadorCarros = addCar;
+        addCar.start();
+        
+        DesenhadorMalha desenhadorMalha = new DesenhadorMalha(this.view.getTextArea(), this.malhaViaria);
+        this.desenhadorMalha = desenhadorMalha;
+        desenhadorMalha.start();
+    }   
+    
+    public void pararSimulacao() {
+        this.adicionadorCarros.paraExcucao();
     }
-
+    
+    public void pararSimulacaoAgora() {
+        this.adicionadorCarros.paraExcucao();
+        this.desenhadorMalha.paraExecucao();
+        this.malhaViaria.paraExecucao();
+    }
 }

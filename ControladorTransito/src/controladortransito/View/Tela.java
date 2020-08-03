@@ -64,6 +64,7 @@ public class Tela extends javax.swing.JFrame {
         jButtonEncerrarAgora = new javax.swing.JButton();
         jTextFieldArquivoMalha = new javax.swing.JTextField();
         jButtonSelecionarMalha = new javax.swing.JButton();
+        jButtonIniciarSemaforo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaMalha = new javax.swing.JTextArea();
@@ -75,7 +76,7 @@ public class Tela extends javax.swing.JFrame {
 
         jLabel2.setText("Intervalo (Milissegundos)");
 
-        jButtonIniciarSimulacao.setText("Inciar ");
+        jButtonIniciarSimulacao.setText("Inciar Monitor");
         jButtonIniciarSimulacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIniciarSimulacaoActionPerformed(evt);
@@ -109,34 +110,40 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
+        jButtonIniciarSemaforo.setText("iniciar Semaforo");
+        jButtonIniciarSemaforo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIniciarSemaforoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(35, 35, 35)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldTempoInsercao, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldQtdCarros)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonEncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                                .addComponent(jButtonEncerrarAgora, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldArquivoMalha)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonSelecionarMalha))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jButtonIniciarSimulacao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldTempoInsercao, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(jTextFieldQtdCarros)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldArquivoMalha)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSelecionarMalha))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonIniciarSimulacao, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonIniciarSemaforo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEncerrarAgora, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,8 +162,13 @@ public class Tela extends javax.swing.JFrame {
                     .addComponent(jTextFieldArquivoMalha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSelecionarMalha))
                 .addGap(66, 66, 66)
-                .addComponent(jButtonIniciarSimulacao, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonIniciarSimulacao, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonIniciarSemaforo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEncerrarAgora, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -180,8 +192,8 @@ public class Tela extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,14 +214,15 @@ public class Tela extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEncerrarActionPerformed
-        System.out.println("apertou em encerrar");
+        this.controller.pararSimulacao();
+        this.jButtonEncerrar.setEnabled(false);
         
     }//GEN-LAST:event_jButtonEncerrarActionPerformed
 
@@ -232,13 +245,49 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSelecionarMalhaActionPerformed
 
     private void jButtonIniciarSimulacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarSimulacaoActionPerformed
-        this.controller.inciarSimulacao(Integer.parseInt(this.jTextFieldTempoInsercao.getText()));
+        int qtdTempo = 0;
+        int qtdCarros = 0;
+        if (!this.jTextFieldTempoInsercao.getText().equals("")) {
+            qtdTempo = Integer.parseInt(this.jTextFieldTempoInsercao.getText());
+        }
+        if (!this.jTextFieldQtdCarros.getText().equals("")) {
+            qtdCarros = Integer.parseInt(this.jTextFieldQtdCarros.getText());
+        }
+        
+        this.controller.inciarSimulacaoMonitor(qtdTempo, qtdCarros);
+        this.jButtonIniciarSimulacao.setEnabled(false);
+        this.jButtonSelecionarMalha.setEnabled(false);
+        this.jTextFieldArquivoMalha.setEnabled(false);
+        this.jTextFieldQtdCarros.setEnabled(false);
+        this.jTextFieldTempoInsercao.setEnabled(false);
+        this.jButtonIniciarSemaforo.setEnabled(false);
 
     }//GEN-LAST:event_jButtonIniciarSimulacaoActionPerformed
 
     private void jButtonEncerrarAgoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEncerrarAgoraActionPerformed
-        System.out.println("apertou em encerrar agora");
+        this.controller.pararSimulacaoAgora();
+        this.jButtonEncerrar.setEnabled(false);
+        this.jButtonEncerrarAgora.setEnabled(false);
     }//GEN-LAST:event_jButtonEncerrarAgoraActionPerformed
+
+    private void jButtonIniciarSemaforoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarSemaforoActionPerformed
+       int qtdTempo = 0;
+        int qtdCarros = 0;
+        if (!this.jTextFieldTempoInsercao.getText().equals("")) {
+            qtdTempo = Integer.parseInt(this.jTextFieldTempoInsercao.getText());
+        }
+        if (!this.jTextFieldQtdCarros.getText().equals("")) {
+            qtdCarros = Integer.parseInt(this.jTextFieldQtdCarros.getText());
+        }
+        
+        this.controller.inciarSimulacaoSemaforo(qtdTempo, qtdCarros);
+        this.jButtonIniciarSimulacao.setEnabled(false);
+        this.jButtonSelecionarMalha.setEnabled(false);
+        this.jTextFieldArquivoMalha.setEnabled(false);
+        this.jTextFieldQtdCarros.setEnabled(false);
+        this.jTextFieldTempoInsercao.setEnabled(false); 
+        this.jButtonIniciarSemaforo.setEnabled(false);
+    }//GEN-LAST:event_jButtonIniciarSemaforoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,6 +331,7 @@ public class Tela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEncerrar;
     private javax.swing.JButton jButtonEncerrarAgora;
+    private javax.swing.JButton jButtonIniciarSemaforo;
     private javax.swing.JButton jButtonIniciarSimulacao;
     private javax.swing.JButton jButtonSelecionarMalha;
     private javax.swing.JLabel jLabel1;
