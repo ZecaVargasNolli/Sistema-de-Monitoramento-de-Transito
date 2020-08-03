@@ -6,7 +6,6 @@ import controladortransito.Model.CarroSemaforo;
 import controladortransito.Model.Direcao;
 import controladortransito.Model.Malha;
 import controladortransito.Model.Nodo;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.Semaphore;

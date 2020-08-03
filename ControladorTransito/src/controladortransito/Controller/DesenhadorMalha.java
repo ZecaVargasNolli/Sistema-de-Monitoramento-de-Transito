@@ -37,7 +37,11 @@ public class DesenhadorMalha extends Thread {
                         malhaPrint += "  ";
                     }
                     else {
+//                        if(nodo.getReserva() != null) {
+//                            malhaPrint += nodo.getReserva().getNome();
+//                        } else {
                         malhaPrint += (nodo.getCarro() != null ? nodo.getCarro().getNome() : nodo.getDirecao().getCaracterExibicao());
+//                        }
                         malhaPrint += " ";
                     }
 
